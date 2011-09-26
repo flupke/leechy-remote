@@ -3,10 +3,10 @@ import pybonjour
 from leechyremote.exceptions import ServiceRegistrationError
 
 
-class DiscoverServer(Greenlet):
+class BonjourServer(Greenlet):
 
     def __init__(self, name, regtype, port):
-        super(DiscoverServer, self).__init__()
+        super(BonjourServer, self).__init__()
         self.stopped = False
         self.service_fd = pybonjour.DNSServiceRegister(name=name, regtype=regtype,
                 port=port, callBack=self.register_callback)

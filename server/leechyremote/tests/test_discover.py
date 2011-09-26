@@ -1,6 +1,6 @@
 from nose.tools import assert_equal
 import random
-from leechyremote.discover import DiscoverServer
+from leechyremote.discover import BonjourServer
 import gevent
 from gevent import select
 import pybonjour
@@ -15,7 +15,8 @@ def test_discover():
     greenlets = []
 
     # Start service
-    server = DiscoverServer(**ref)
+    server = BonjourServer(**ref)
+    server.start()
     greenlets.append(server)
 
     # Browse for service
@@ -33,8 +34,6 @@ def test_discover():
                 greenlet.kill()
 
     def resolve(interface_index, name, regtype, reply_domain):
-        data["name"] = name
-        data["regtype"] = regtype
         resolve_fd = pybonjour.DNSServiceResolve(0, interface_index,
                 name, regtype, reply_domain, resolve_callback)
         try:
@@ -54,8 +53,11 @@ def test_discover():
         if not (flags & pybonjour.kDNSServiceFlagsAdd):
             raise Exception('Service removed')
             return
-        greenlets.append(gevent.spawn(resolve, interface_index, name,
-            regtype, reply_domain))
+        data["name"] = name
+        data["regtype"] = regtype
+        resolver = gevent.spawn(resolve, interface_index, name,
+            regtype, reply_domain)
+        greenlets.append(resolver)
 
     def browse():
         browse_fd = pybonjour.DNSServiceBrowse(regtype=ref["regtype"],
