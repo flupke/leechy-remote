@@ -27,8 +27,8 @@ public final class R {
         public static final int tableRow1=0x7f050000;
         public static final int tableRow2=0x7f050007;
         public static final int tableRow4=0x7f050003;
-        public static final int volume_down_button=0x7f050002;
-        public static final int volume_up_button=0x7f050001;
+        public static final int volume_down_button=0x7f050001;
+        public static final int volume_up_button=0x7f050002;
     }
     public static final class layout {
         public static final int remote=0x7f030000;

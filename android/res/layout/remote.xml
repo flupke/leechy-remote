@@ -2,16 +2,16 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    <TableRow android:layout_width="wrap_content" android:id="@+id/tableRow1" android:layout_weight="1">
-        <ImageButton android:layout_height="wrap_content" android:src="@drawable/volume_up" android:layout_width="wrap_content" android:id="@+id/volume_up_button"></ImageButton>
-        <ImageButton android:layout_height="wrap_content" android:src="@drawable/volume_down" android:layout_width="wrap_content" android:id="@+id/volume_down_button"></ImageButton>
+    <TableRow android:id="@+id/tableRow1" android:layout_width="match_parent" android:layout_weight="1">
+        <ImageButton android:layout_weight="1" android:layout_width="0dp" android:src="@drawable/volume_down" android:layout_height="match_parent" android:id="@+id/volume_down_button"></ImageButton>
+        <ImageButton android:src="@drawable/volume_up" android:id="@+id/volume_up_button" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"></ImageButton>
     </TableRow>
-    <TableRow android:layout_height="0dp" android:layout_width="wrap_content" android:id="@+id/tableRow4" android:layout_weight="1">
-        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/prev" android:layout_width="0dp" android:id="@+id/prev_button"></ImageButton>
-        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/play" android:layout_width="0dp" android:id="@+id/play_pause_button"></ImageButton>
-        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/next" android:layout_width="0dp" android:id="@+id/next_button"></ImageButton>
+    <TableRow android:layout_height="0dp" android:layout_width="wrap_content" android:id="@+id/tableRow4" android:layout_weight="1" android:layout_gravity="center_vertical">
+        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/prev" android:layout_width="0dp" android:id="@+id/prev_button" android:layout_gravity="center_vertical"></ImageButton>
+        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/play" android:layout_width="0dp" android:id="@+id/play_pause_button" android:layout_gravity="center_vertical"></ImageButton>
+        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/next" android:layout_width="0dp" android:id="@+id/next_button" android:layout_gravity="center_vertical"></ImageButton>
     </TableRow>
-    <TableRow android:id="@+id/tableRow2" android:layout_height="wrap_content" android:layout_width="wrap_content">
-        <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="status_text" android:id="@+id/status_label"></TextView>
+    <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:layout_gravity="bottom">
+        <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="status_text" android:id="@+id/status_label" android:layout_gravity="bottom"></TextView>
     </TableRow>
 </TableLayout>
