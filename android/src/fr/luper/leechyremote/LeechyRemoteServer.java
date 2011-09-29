@@ -15,6 +15,7 @@ public class LeechyRemoteServer {
 	
 	private String address;
 	private int port;
+	private Socket socket;
 	
 	LeechyRemoteServer(String init_address, int init_port) {
 		address = init_address;
@@ -22,9 +23,12 @@ public class LeechyRemoteServer {
 	}
 	
 	public void sendAction(String name) throws UnknownHostException, IOException {
-		Socket socket = new Socket(address, port);
+		if (socket == null) {
+			socket = new Socket(address, port);
+			socket.setKeepAlive(true);
+		}
 		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-		Log.d(TAG, "Sending action to server:" + name);
+		Log.d(TAG, "Sending action to server: " + name);
 		out.println("SMPLAYER ACTION " + name);
 	}
 }
