@@ -78,7 +78,7 @@ public class RemoteActivity extends Activity implements ServiceListener {
 		if (current_server != null) {
 			try {
 				current_server.sendAction(action);
-			} catch (IOException err) {
+			} catch (Exception err) {
 				notifyUser("Error sending action to server: " + err.getMessage());
 			}
 		}
