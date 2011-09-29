@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-    <TableRow android:id="@+id/tableRow1" android:layout_width="match_parent" android:layout_weight="1">
+    android:layout_height="match_parent" android:layout_width="match_parent">
+    <TableRow android:layout_width="match_parent" android:id="@+id/volume_row" android:layout_weight="1">
         <ImageButton android:layout_weight="1" android:layout_width="0dp" android:src="@drawable/volume_down" android:layout_height="match_parent" android:id="@+id/volume_down_button"></ImageButton>
         <ImageButton android:src="@drawable/volume_up" android:id="@+id/volume_up_button" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"></ImageButton>
     </TableRow>
-    <TableRow android:layout_height="0dp" android:layout_width="wrap_content" android:id="@+id/tableRow4" android:layout_weight="1" android:layout_gravity="center_vertical">
-        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/prev" android:layout_width="0dp" android:id="@+id/prev_button" android:layout_gravity="center_vertical"></ImageButton>
-        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/play" android:layout_width="0dp" android:id="@+id/play_pause_button" android:layout_gravity="center_vertical"></ImageButton>
-        <ImageButton android:layout_weight="1" android:layout_height="wrap_content" android:src="@drawable/next" android:layout_width="0dp" android:id="@+id/next_button" android:layout_gravity="center_vertical"></ImageButton>
+    <TableRow android:baselineAligned="true" android:layout_width="fill_parent" android:layout_height="0dp" android:id="@+id/mute_expand_row" android:layout_weight="0">
+        <LinearLayout
+            android:id="@+id/lll"
+            android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="1" android:layout_gravity="center_vertical">
+            <ImageButton android:src="@drawable/mute" android:id="@+id/mute_button" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical"></ImageButton>
+            <FrameLayout android:id="@+id/frameLayout1" android:layout_height="match_parent" android:layout_width="118dp" android:layout_weight="0.62"></FrameLayout>
+            <ImageButton android:src="@drawable/expand" android:layout_height="wrap_content" android:id="@+id/expand_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical"></ImageButton>
+        </LinearLayout>
     </TableRow>
-    <TableRow android:layout_width="wrap_content" android:id="@+id/tableRow3" android:layout_height="wrap_content">
-        <ImageButton android:src="@drawable/reconnect" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_weight="1" android:layout_width="10dp" android:id="@+id/reconnect_button"></ImageButton>
+    <TableRow android:layout_width="wrap_content" android:layout_height="0dp" android:layout_gravity="center_vertical" android:id="@+id/skip_row" android:layout_weight="1">
+        <ImageButton android:src="@drawable/rwd_3" android:id="@+id/rewind_3_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
+        <ImageButton android:src="@drawable/rwd_2" android:id="@+id/rewind_2_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
+        <ImageButton android:src="@drawable/rwd_1" android:id="@+id/rewind_1_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
+        <ImageButton android:src="@drawable/fwd_1" android:id="@+id/forward_1_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
+        <ImageButton android:src="@drawable/fwd_2" android:id="@+id/forward_2_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
+        <ImageButton android:src="@drawable/fwd_3" android:id="@+id/forward_3_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
     </TableRow>
-    <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:layout_gravity="bottom">
-        <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="status_text" android:id="@+id/status_label" android:layout_gravity="bottom"></TextView>
+    <TableRow android:layout_height="0dp" android:layout_width="wrap_content" android:layout_gravity="center_vertical" android:id="@+id/play_row" android:layout_weight="1">
+        <ImageButton android:layout_weight="1" android:src="@drawable/prev" android:layout_width="0dp" android:id="@+id/prev_button" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
+        <ImageButton android:layout_weight="1" android:layout_width="0dp" android:id="@+id/play_pause_button" android:layout_gravity="center_vertical" android:src="@drawable/play_pause" android:layout_height="match_parent"></ImageButton>
+        <ImageButton android:layout_weight="1" android:src="@drawable/next" android:layout_width="0dp" android:id="@+id/next_button" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
     </TableRow>
 </TableLayout>

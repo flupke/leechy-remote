@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, LeechyRemoteActivity!</string>
     <string name="app_name">Leechy Remote</string>
+    <string name="probe_server">Probe server</string>
 </resources>

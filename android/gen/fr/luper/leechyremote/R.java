@@ -11,33 +11,55 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
-        public static final int next=0x7f020001;
-        public static final int pause=0x7f020002;
-        public static final int play=0x7f020003;
-        public static final int prev=0x7f020004;
-        public static final int reconnect=0x7f020005;
-        public static final int volume_down=0x7f020006;
-        public static final int volume_up=0x7f020007;
+        public static final int expand=0x7f020000;
+        public static final int fwd_1=0x7f020001;
+        public static final int fwd_2=0x7f020002;
+        public static final int fwd_3=0x7f020003;
+        public static final int icon=0x7f020004;
+        public static final int mute=0x7f020005;
+        public static final int next=0x7f020006;
+        public static final int pause=0x7f020007;
+        public static final int play=0x7f020008;
+        public static final int play_pause=0x7f020009;
+        public static final int prev=0x7f02000a;
+        public static final int reconnect=0x7f02000b;
+        public static final int rwd_1=0x7f02000c;
+        public static final int rwd_2=0x7f02000d;
+        public static final int rwd_3=0x7f02000e;
+        public static final int volume_down=0x7f02000f;
+        public static final int volume_up=0x7f020010;
     }
     public static final class id {
-        public static final int next_button=0x7f050006;
-        public static final int play_pause_button=0x7f050005;
-        public static final int prev_button=0x7f050004;
-        public static final int reconnect_button=0x7f050008;
-        public static final int status_label=0x7f05000a;
-        public static final int tableRow1=0x7f050000;
-        public static final int tableRow2=0x7f050009;
-        public static final int tableRow3=0x7f050007;
-        public static final int tableRow4=0x7f050003;
-        public static final int volume_down_button=0x7f050001;
-        public static final int volume_up_button=0x7f050002;
+        public static final int expand_button=0x7f060007;
+        public static final int forward_1_button=0x7f06000c;
+        public static final int forward_2_button=0x7f06000d;
+        public static final int forward_3_button=0x7f06000e;
+        public static final int frameLayout1=0x7f060006;
+        public static final int lll=0x7f060004;
+        public static final int mute_button=0x7f060005;
+        public static final int mute_expand_row=0x7f060003;
+        public static final int next_button=0x7f060012;
+        public static final int play_pause_button=0x7f060011;
+        public static final int play_row=0x7f06000f;
+        public static final int prev_button=0x7f060010;
+        public static final int probe_action=0x7f060013;
+        public static final int rewind_1_button=0x7f06000b;
+        public static final int rewind_2_button=0x7f06000a;
+        public static final int rewind_3_button=0x7f060009;
+        public static final int skip_row=0x7f060008;
+        public static final int volume_down_button=0x7f060001;
+        public static final int volume_row=0x7f060000;
+        public static final int volume_up_button=0x7f060002;
     }
     public static final class layout {
         public static final int remote=0x7f030000;
     }
+    public static final class menu {
+        public static final int remote=0x7f050000;
+    }
     public static final class string {
         public static final int app_name=0x7f040001;
         public static final int hello=0x7f040000;
+        public static final int probe_server=0x7f040002;
     }
 }

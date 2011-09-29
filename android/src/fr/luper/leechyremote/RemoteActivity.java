@@ -7,6 +7,9 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.MulticastLock;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -49,6 +52,49 @@ public class RemoteActivity extends Activity implements ServiceListener {
     			sendAction("volume_down");
     		}
     	});    	
+    	findViewById(R.id.mute_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("mute");
+    		}
+    	});    	
+    	
+    	findViewById(R.id.expand_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("toggle_fullscreen");
+    		}
+    	});    	
+
+    	findViewById(R.id.rewind_1_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("rewind_1");
+    		}
+    	});
+    	findViewById(R.id.rewind_2_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("rewind_2");
+    		}
+    	});
+    	findViewById(R.id.rewind_3_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("rewind_3");
+    		}
+    	});   
+    	findViewById(R.id.forward_1_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("forward_1");
+    		}
+    	});
+    	findViewById(R.id.forward_2_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("forward_2");
+    		}
+    	});
+    	findViewById(R.id.forward_3_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("forward_3");
+    		}
+    	}); 
+    	
     	findViewById(R.id.prev_button).setOnClickListener(new OnClickListener() {
     		public void onClick(View v) {
     			sendAction("play_previous");
@@ -64,17 +110,31 @@ public class RemoteActivity extends Activity implements ServiceListener {
     			sendAction("play_pause");
     		}
     	});
-    	findViewById(R.id.reconnect_button).setOnClickListener(new OnClickListener() {
-    		public void onClick(View v) {
-    			startServerProbe();
-    		}
-    	});
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.remote, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.probe_action:
+            current_server = null;
+            startServerProbe();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }    
     
     /**
      * Send an action to the currently bound server.
      */
-    protected void sendAction(String action) {
+    private void sendAction(String action) {
 		if (current_server != null) {
 			try {
 				current_server.sendAction(action);
@@ -89,15 +149,17 @@ public class RemoteActivity extends Activity implements ServiceListener {
      * @throws IOException 
      */
     private void startServerProbe() {
-    	notifyUser("Looking for a server...");
-    	stopServerProbe();
-        acquireMulticastLock();    
-        try {
-        	jmdns = JmDNS.create();
-        	jmdns.addServiceListener(SERVICE_NAME, this);
-        } catch (IOException err) {
-            notifyUser("Error while scanning network: " + err.getMessage());
-        }
+    	if (current_server == null) {
+	    	notifyUser("Looking for a server...");
+	    	stopServerProbe();
+	        acquireMulticastLock();    
+	        try {
+	        	jmdns = JmDNS.create();
+	        	jmdns.addServiceListener(SERVICE_NAME, this);
+	        } catch (IOException err) {
+	            notifyUser("Error while scanning network: " + err.getMessage());
+	        }
+    	}
     }
     
     private void stopServerProbe() {
@@ -136,11 +198,9 @@ public class RemoteActivity extends Activity implements ServiceListener {
     private synchronized void notifyUser(final String text) {
     	runOnUiThread(new Runnable() {
     		public void run() {
-    			TextView status_label = (TextView) findViewById(R.id.status_label);
     	    	Context context = getApplicationContext();
     	    	Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
     	    	toast.show();
-    	    	status_label.setText(text);
     		}
     	});
     	Log.d(TAG, text);
