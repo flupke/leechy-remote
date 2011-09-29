@@ -16,16 +16,19 @@ public final class R {
         public static final int pause=0x7f020002;
         public static final int play=0x7f020003;
         public static final int prev=0x7f020004;
-        public static final int volume_down=0x7f020005;
-        public static final int volume_up=0x7f020006;
+        public static final int reconnect=0x7f020005;
+        public static final int volume_down=0x7f020006;
+        public static final int volume_up=0x7f020007;
     }
     public static final class id {
         public static final int next_button=0x7f050006;
         public static final int play_pause_button=0x7f050005;
         public static final int prev_button=0x7f050004;
-        public static final int status_label=0x7f050008;
+        public static final int reconnect_button=0x7f050008;
+        public static final int status_label=0x7f05000a;
         public static final int tableRow1=0x7f050000;
-        public static final int tableRow2=0x7f050007;
+        public static final int tableRow2=0x7f050009;
+        public static final int tableRow3=0x7f050007;
         public static final int tableRow4=0x7f050003;
         public static final int volume_down_button=0x7f050001;
         public static final int volume_up_button=0x7f050002;

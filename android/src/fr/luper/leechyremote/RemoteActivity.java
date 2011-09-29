@@ -7,6 +7,8 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.MulticastLock;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import javax.jmdns.JmDNS;
@@ -26,11 +28,8 @@ public class RemoteActivity extends Activity implements ServiceListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remote);
-        try {
-        	startServerProbe();
-        } catch (IOException err) {
-        	notifyUser("Error while scanning network: " + err.getMessage());
-        }
+        installEventHandlers();
+        startServerProbe();         
     }
     
     @Override
@@ -39,16 +38,66 @@ public class RemoteActivity extends Activity implements ServiceListener {
     	super.onDestroy();
     }
     
+    private void installEventHandlers() {
+    	findViewById(R.id.volume_up_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("volume_up");
+    		}
+    	});
+    	findViewById(R.id.volume_down_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("volume_down");
+    		}
+    	});    	
+    	findViewById(R.id.prev_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("play_previous");
+    		}
+    	});    	
+    	findViewById(R.id.next_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("play_next");
+    		}
+    	});    	
+    	findViewById(R.id.play_pause_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			sendAction("play_pause");
+    		}
+    	});
+    	findViewById(R.id.reconnect_button).setOnClickListener(new OnClickListener() {
+    		public void onClick(View v) {
+    			startServerProbe();
+    		}
+    	});
+    }
+    
     /**
+     * Send an action to the currently bound server.
+     */
+    protected void sendAction(String action) {
+		if (current_server != null) {
+			try {
+				current_server.sendAction(action);
+			} catch (IOException err) {
+				notifyUser("Error sending action to server: " + err.getMessage());
+			}
+		}
+	}
+
+	/**
      * Probe for a Leechy Remote server.
      * @throws IOException 
      */
-    private void startServerProbe() throws IOException {
+    private void startServerProbe() {
     	notifyUser("Looking for a server...");
     	stopServerProbe();
-        acquireMulticastLock();      
-    	jmdns = JmDNS.create();
-    	jmdns.addServiceListener(SERVICE_NAME, this);
+        acquireMulticastLock();    
+        try {
+        	jmdns = JmDNS.create();
+        	jmdns.addServiceListener(SERVICE_NAME, this);
+        } catch (IOException err) {
+            notifyUser("Error while scanning network: " + err.getMessage());
+        }
     }
     
     private void stopServerProbe() {
@@ -119,5 +168,6 @@ public class RemoteActivity extends Activity implements ServiceListener {
 	@Override
     public void serviceRemoved(ServiceEvent event) {
         notifyUser("Server lost");
+        current_server = null;
     }    
 }
