@@ -38,6 +38,13 @@ class SMPlayerInterface(CommandLineInterface):
         "mute": "mute",
         "play_previous": "pl_prev",
         "play_next": "pl_next",
+        "forward_1": "forward1",
+        "forward_2": "forward2",
+        "forward_3": "forward3",
+        "rewind_1": "rewind1",
+        "rewind_2": "rewind2",
+        "rewind_3": "rewind3",
+        "toggle_fullscreen": "fullscreen",
     }
 
     def get_executable(self):
