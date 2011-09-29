@@ -21,6 +21,7 @@ class CommandLineInterface(object):
                 "implement the get_executable() method")
 
     def send_action(self, action, *params):
+        print "Sending action %s%r" % (action, params)
         mapped_action = self.actions_map.get(action, action)
         args = [self.action_arg, mapped_action]
         args.extend(params)
