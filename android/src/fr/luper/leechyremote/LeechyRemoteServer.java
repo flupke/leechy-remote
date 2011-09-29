@@ -23,6 +23,13 @@ public class LeechyRemoteServer {
 		port = init_port;
 	}
 	
+	/**
+	 * Send an action to the server.
+	 * 
+	 * @param name
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	public void sendAction(String name) throws UnknownHostException, IOException {
 		if (socket == null) {
 			connect();
@@ -37,9 +44,42 @@ public class LeechyRemoteServer {
 		}
 	}
 	
-	private void connect() throws UnknownHostException, IOException {		
+	/**
+	 * Establish the connection to the server.
+	 * 
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
+	public void connect() throws UnknownHostException, IOException {		
 		socket = new Socket(address, port);
 		socket.setKeepAlive(true);
 		out = new PrintWriter(socket.getOutputStream(), true);
+	}
+
+	/**
+	 * Get a textual representation of the server address.
+	 */
+	public String getAddrString() {
+		return address + ":" + port;
+	}
+	
+	/*************************************************************************
+	 * Accessors
+	 */
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 }

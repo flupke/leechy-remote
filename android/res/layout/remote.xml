@@ -14,7 +14,7 @@
             <ImageButton android:src="@drawable/expand" android:layout_height="wrap_content" android:id="@+id/expand_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical"></ImageButton>
         </LinearLayout>
     </TableRow>
-    <TableRow android:layout_width="wrap_content" android:layout_height="0dp" android:layout_gravity="center_vertical" android:id="@+id/skip_row" android:layout_weight="1">
+    <TableRow android:layout_width="wrap_content" android:layout_height="0dp" android:layout_gravity="center_vertical" android:layout_weight="1" android:id="@+id/seek_row">
         <ImageButton android:src="@drawable/rwd_3" android:id="@+id/rewind_3_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
         <ImageButton android:src="@drawable/rwd_2" android:id="@+id/rewind_2_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>
         <ImageButton android:src="@drawable/rwd_1" android:id="@+id/rewind_1_button" android:layout_weight="1" android:layout_width="0dp" android:layout_gravity="center_vertical" android:layout_height="match_parent"></ImageButton>

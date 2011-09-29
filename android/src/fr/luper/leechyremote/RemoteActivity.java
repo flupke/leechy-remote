@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
 import android.widget.Toast;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -28,11 +27,32 @@ public class RemoteActivity extends Activity implements ServiceListener {
 	private LeechyRemoteServer current_server;
 	
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle state) {        
+    	String previous_server_address;
+    	int previous_server_port;
+    	boolean do_probe = true;   
+    	
+    	// Initialize GUI
+        super.onCreate(state);        
         setContentView(R.layout.remote);
-        installEventHandlers();
-        startServerProbe();         
+        installEventHandlers();	
+        
+        // Try to reconnect to the previous server, or probe for it
+    	if (state != null) {
+    		previous_server_address = state.getString("previous_server_address");
+		   	previous_server_port = state.getInt("previous_server_port");	        
+	        if (previous_server_address != null) {
+	        	current_server = new LeechyRemoteServer(previous_server_address, previous_server_port);
+	        	try {
+	        		current_server.connect();
+	        		Log.d(TAG, "Reconnected to " + current_server.getAddrString());
+	        		do_probe = false;
+	        	} catch (Exception err) { }
+	        }
+    	}    	
+        if (do_probe) {
+        	startServerProbe();         
+        }    	        
     }
     
     @Override
@@ -41,7 +61,16 @@ public class RemoteActivity extends Activity implements ServiceListener {
     	super.onDestroy();
     }
     
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+    	if (state != null && current_server != null) {
+    		state.putString("previous_server_address", current_server.getAddress());
+    		state.putInt("previous_server_port", current_server.getPort());
+    	}
+    }    
+    
     private void installEventHandlers() {
+    	// Volume controls
     	findViewById(R.id.volume_up_button).setOnClickListener(new OnClickListener() {
     		public void onClick(View v) {
     			sendAction("volume_up");
@@ -57,7 +86,7 @@ public class RemoteActivity extends Activity implements ServiceListener {
     			sendAction("mute");
     		}
     	});    	
-    	
+    	// Seek bar
     	findViewById(R.id.expand_button).setOnClickListener(new OnClickListener() {
     		public void onClick(View v) {
     			sendAction("toggle_fullscreen");
@@ -94,7 +123,7 @@ public class RemoteActivity extends Activity implements ServiceListener {
     			sendAction("forward_3");
     		}
     	}); 
-    	
+    	// Playback control
     	findViewById(R.id.prev_button).setOnClickListener(new OnClickListener() {
     		public void onClick(View v) {
     			sendAction("play_previous");
@@ -149,17 +178,15 @@ public class RemoteActivity extends Activity implements ServiceListener {
      * @throws IOException 
      */
     private void startServerProbe() {
-    	if (current_server == null) {
-	    	notifyUser("Looking for a server...");
-	    	stopServerProbe();
-	        acquireMulticastLock();    
-	        try {
-	        	jmdns = JmDNS.create();
-	        	jmdns.addServiceListener(SERVICE_NAME, this);
-	        } catch (IOException err) {
-	            notifyUser("Error while scanning network: " + err.getMessage());
-	        }
-    	}
+    	notifyUser("Looking for a server...");
+    	stopServerProbe();
+        acquireMulticastLock();    
+        try {
+        	jmdns = JmDNS.create();
+        	jmdns.addServiceListener(SERVICE_NAME, this);
+        } catch (IOException err) {
+            notifyUser("Error while scanning network: " + err.getMessage());
+        }    	
     }
     
     private void stopServerProbe() {
@@ -216,7 +243,7 @@ public class RemoteActivity extends Activity implements ServiceListener {
 		String address = info.getHostAddresses()[0];
 		int port = info.getPort();
 		current_server = new LeechyRemoteServer(address, port);
-        notifyUser("Found server at " + address + ":" + port);
+        notifyUser("Found server at " + current_server.getAddrString());
         stopServerProbe();
     }    		
     

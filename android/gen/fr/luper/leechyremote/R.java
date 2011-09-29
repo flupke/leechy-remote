@@ -46,7 +46,7 @@ public final class R {
         public static final int rewind_1_button=0x7f06000b;
         public static final int rewind_2_button=0x7f06000a;
         public static final int rewind_3_button=0x7f060009;
-        public static final int skip_row=0x7f060008;
+        public static final int seek_row=0x7f060008;
         public static final int volume_down_button=0x7f060001;
         public static final int volume_row=0x7f060000;
         public static final int volume_up_button=0x7f060002;
