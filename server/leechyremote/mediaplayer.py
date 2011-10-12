@@ -1,36 +1,10 @@
-import subprocess
 from gevent.server import StreamServer
+from gevent import socket
 from leechyremote import settings
 
 
-class CommandLineInterface(object):
-    """
-    Interface to control programs via the command line.
-    """
-    
-    action_arg = None
-    actions_map = {}
+class SMPlayerInterface(object):
 
-    def call(self, *args):
-        final_args = [self.get_executable()]
-        final_args.extend(args)
-        subprocess.call(final_args)
-
-    def get_executable(self):
-        raise NotImplementedError("subclasses of CommandLineInterface must "
-                "implement the get_executable() method")
-
-    def send_action(self, action, *params):
-        print "Sending action %s%r" % (action, params)
-        mapped_action = self.actions_map.get(action, action)
-        args = [self.action_arg, mapped_action]
-        args.extend(params)
-        self.call(*args)
-
-
-class SMPlayerInterface(CommandLineInterface):
-
-    action_arg = "-send-action"
     actions_map = {
         "play_pause": "play_or_pause",
         "volume_up": "increase_volume",
@@ -47,16 +21,34 @@ class SMPlayerInterface(CommandLineInterface):
         "toggle_fullscreen": "fullscreen",
     }
 
-    def get_executable(self):
-        return settings.SMPLAYER_EXECUTABLE
+    def __init__(self):
+        self.socket = None
+
+    def _connect(self):
+        if self.socket is None:
+            print "connect %r" % (settings.SMPLAYER_ADDRESS,)
+            self.socket = socket.create_connection(settings.SMPLAYER_ADDRESS)
+
+    def _send(self, line):
+        try:
+            self._connect()
+            print repr("%s\n" % line)
+            self.socket.send("%s\n" % line)
+        except IOError, err:
+            self.socket = None
+            print "Error: %s" % err
 
     def open(self, path):
-        self.send_action("pl_remove_all")
-        self.queue(path)
-        self.send_action("pl_play")
+        self._send("open %s" % path)
 
     def queue(self, path):
-        self.call("-add-to-playlist", path)
+        raise NotImplementedError()
+
+    def send_action(self, action, *params):
+        action_str = self.actions_map[action]
+        if params:
+            action_str += " " + " ".join(params)
+        self._send("f %s" % action_str)
 
 
 media_player_interfaces = {
@@ -82,9 +74,9 @@ class MediaPlayersControlServer(StreamServer):
     """
 
     def handle(self, socket, address):
-        fd = socket.makefile()
+        fp = socket.makefile()
         while True:
-            line = fd.readline()
+            line = fp.readline()
             if not line:
                 break
             player, command, args = line.strip().split(" ", 2)
